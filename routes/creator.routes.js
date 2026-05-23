@@ -14,8 +14,8 @@ module.exports = app => {
 
     router.get('/profile', controller.getProfile);
     router.put('/profile', isJsonRequestValid, schemaValidation(updateCreatorProfileSchema), controller.updateProfile);
-    router.post('/profile/image', upload.single('image'), controller.uploadProfileImage);
-    router.post('/profile/banner', upload.single('banner'), controller.uploadBanner);
+    router.put('/profile/image', upload.single('image'), controller.uploadProfileImage);
+    router.put('/profile/banner', upload.single('banner'), controller.uploadBanner);
 
     app.use('/creators', router);
 };
