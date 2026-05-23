@@ -28,8 +28,13 @@ require("./routes")(app);
 // Para habilitar la BD
 db.sequelize.sync({
     // force: true // drop tables and recreate
-}).then(() => {
+}).then(async () => {
     console.log("db resync");
+    const count = await db.supportType.count();
+    if (count === 0) {
+        await db.supportType.create({ name: 'Flan', price: 10.0 });
+        console.log('SupportType seeded: Flan (Bs. 10)');
+    }
 });
 
 app.listen(port, () => {

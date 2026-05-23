@@ -1,5 +1,6 @@
 const fs = require('fs');
 const creatorService = require('../services/creator.service');
+const donationService = require('../services/donation.service');
 
 const deleteOldFile = (filePath) => {
     if (!filePath || filePath.startsWith('uploads/defaults/')) return;
@@ -62,5 +63,17 @@ exports.uploadBanner = async (req, res) => {
     } catch (error) {
         console.error(error);
         res.status(500).json({ message: 'Error al subir banner' });
+    }
+};
+
+exports.getDonationReport = async (req, res) => {
+    const creator = req.user.creator;
+    const { start, end } = req.query;
+    try {
+        const report = await donationService.getReportByCreator(creator.id, { start, end });
+        res.status(200).json(report);
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: 'Error al obtener reporte' });
     }
 };

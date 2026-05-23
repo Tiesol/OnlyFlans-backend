@@ -1,3 +1,4 @@
+const { Op } = require('sequelize');
 const db = require("../models");
 
 const postService = {
@@ -11,6 +12,20 @@ const postService = {
         return await db.post.findAll({
             where: { creatorId },
             include: [{ model: db.comment }],
+            order: [['createdAt', 'DESC']]
+        });
+    },
+    getFeedForFollower: async (followerId) => {
+        const donations = await db.donation.findAll({
+            where: { followerId },
+            attributes: ['creatorId'],
+            group: ['creatorId']
+        });
+        const creatorIds = donations.map(d => d.creatorId);
+        if (!creatorIds.length) return [];
+        return await db.post.findAll({
+            where: { creatorId: { [Op.in]: creatorIds } },
+            include: [{ model: db.creator, attributes: ['id', 'username', 'profileImageUrl'] }],
             order: [['createdAt', 'DESC']]
         });
     },

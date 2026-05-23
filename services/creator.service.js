@@ -14,11 +14,26 @@ const creatorService = {
     getByUserId: async (userId) => {
         return await db.creator.findOne({ where: { userId } });
     },
+    getById: async (id) => {
+        return await db.creator.findByPk(id);
+    },
+    getAll: async () => {
+        return await db.creator.findAll({
+            attributes: ['id', 'username', 'profileImageUrl', 'bannerUrl', 'title', 'description'],
+            order: [['username', 'ASC']]
+        });
+    },
+    search: async (q) => {
+        const { Op } = require('sequelize');
+        return await db.creator.findAll({
+            where: { username: { [Op.like]: `%${q}%` } },
+            attributes: ['id', 'username', 'profileImageUrl', 'title'],
+            order: [['username', 'ASC']]
+        });
+    },
     updateProfile: async (userId, data) => {
         const creator = await db.creator.findOne({ where: { userId } });
-        if (creator) {
-            return await creator.update(data);
-        }
+        if (creator) return await creator.update(data);
         return null;
     }
 };
