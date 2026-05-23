@@ -6,6 +6,4 @@ const isJsonRequestValid = (req, res, next) => {
 };
 
 
-module.exports = {
-    isJsonRequestValid
-};
+module.exports = isJsonRequestValid;

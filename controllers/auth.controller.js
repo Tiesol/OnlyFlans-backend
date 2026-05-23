@@ -33,6 +33,10 @@ exports.postRegister = async (req, res) => {
     }
 };
 
+exports.postLogout = (_req, res) => {
+    res.status(200).json({ message: 'Sesión cerrada exitosamente' });
+};
+
 exports.postLogin = async (req, res) => {
     const { email, password } = req.body;
     const usuario = await userService.findUserByEmail(email);

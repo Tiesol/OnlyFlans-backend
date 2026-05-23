@@ -15,6 +15,12 @@ const postService = {
             order: [['createdAt', 'DESC']]
         });
     },
+    getByCreatorIdPublic: async (creatorId) => {
+        return await db.post.findAll({
+            where: { creatorId },
+            order: [['createdAt', 'DESC']]
+        });
+    },
     getFeedForFollower: async (followerId) => {
         const donations = await db.donation.findAll({
             where: { followerId },

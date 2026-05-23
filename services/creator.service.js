@@ -1,4 +1,5 @@
 const db = require("../models");
+const { Op, fn, col } = require('sequelize');
 
 const creatorService = {
     createCreator: async (username, userId) => {
@@ -20,15 +21,14 @@ const creatorService = {
     getAll: async () => {
         return await db.creator.findAll({
             attributes: ['id', 'username', 'profileImageUrl', 'bannerUrl', 'title', 'description'],
-            order: [['username', 'ASC']]
+            order: [[fn('LOWER', col('username')), 'ASC']]
         });
     },
     search: async (q) => {
-        const { Op } = require('sequelize');
         return await db.creator.findAll({
             where: { username: { [Op.like]: `%${q}%` } },
             attributes: ['id', 'username', 'profileImageUrl', 'title'],
-            order: [['username', 'ASC']]
+            order: [[fn('LOWER', col('username')), 'ASC']]
         });
     },
     updateProfile: async (userId, data) => {

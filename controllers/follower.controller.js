@@ -39,7 +39,7 @@ exports.getSupportTypes = async (req, res) => {
 exports.getCreatorPosts = async (req, res) => {
     const creatorId = req.params.id;
     try {
-        const posts = await postService.getByCreatorId(creatorId);
+        const posts = await postService.getByCreatorIdPublic(creatorId);
         res.status(200).json(posts);
     } catch (error) {
         console.error(error);

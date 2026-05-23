@@ -1,6 +1,6 @@
 const requireAuth = require('../middlewares/user.middleware');
 const requireRole = require('../middlewares/requireRole.middleware');
-const { isJsonRequestValid } = require('../middlewares/isJsonRequestValid.middleware');
+const isJsonRequestValid = require('../middlewares/isJsonRequestValid.middleware');
 const schemaValidation = require('../middlewares/schemaValidation.middleware');
 const { createDonationSchema } = require('../validators/donation.schema');
 
